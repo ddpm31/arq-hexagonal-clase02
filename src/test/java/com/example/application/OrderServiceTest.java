@@ -21,7 +21,7 @@ class OrderServiceTest {
     public void testCreateOrder() {
 
         Order order = new Order(LocalDateTime.now(), "PENDING");
-        order = orderService.createOrder(order);
+        orderService.createOrder(order);
         assertNotNull(order.getId());
 
     }
@@ -30,7 +30,7 @@ class OrderServiceTest {
     public void testAddItemToOrder() {
 
         Order order = new Order(LocalDateTime.now(), "PENDING");
-        order = orderService.createOrder(order);
+        orderService.createOrder(order);
         OrderItem item = new OrderItem("product1", 2, new BigDecimal("50.0"));
         orderService.addItemToOrder(order.getId(), item);
         assertEquals(1, orderService.findOrderById(order.getId()).getItems().size());
@@ -41,7 +41,7 @@ class OrderServiceTest {
     public void testUpdateOrderStatus() {
 
         Order order = new Order(LocalDateTime.now(), "PENDING");
-        order = orderService.createOrder(order);
+        orderService.createOrder(order);
         orderService.updateOrderStatus(order.getId(), "CONFIRMED");
         assertEquals("CONFIRMED", orderService.findOrderById(order.getId()).getStatus());
 

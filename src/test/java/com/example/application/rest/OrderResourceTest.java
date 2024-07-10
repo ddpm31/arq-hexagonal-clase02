@@ -29,28 +29,25 @@ class OrderResourceTest {
     }
 
     @Test
-    public void testAddItemToOrderEndpoint() {
-
+    public void testAddItemToOrderEndpoint(){
         Order order = new Order(LocalDateTime.now(), "PENDING");
         given()
                 .contentType("application/json")
                 .body(order)
                 .when().post("/orders")
-                .then()
-                    .statusCode(201);
+                .then().statusCode(201);
 
         OrderItem item = new OrderItem("product1", 2, new BigDecimal("50.0"));
         given()
                 .contentType("application/json")
                 .body(item)
-                .when().post("/orders/{orderId}/items")
+                .when().post("/orders/{orderId}/items", order.getId())
                 .then()
-                    .statusCode(201);
-
+                    .statusCode(200);
     }
 
     @Test
-    public void testUpdateOrderStatusEndpoint() {
+    public void testUpdateOrderStatusEndpoint(){
 
         String s = "CONFIRMED";
         Order order = new Order(LocalDateTime.now(), "PENDING");
@@ -61,13 +58,11 @@ class OrderResourceTest {
                 .then()
                     .statusCode(201);
         given()
-            .contentType("application/json")
-            .body(s)
-            .when().put("/orders/{orderId}/items", order.getId())
-            .then()
-                .statusCode(201)
-                .body("status", is("CONFIRMED"));
-
+                .contentType("application/json")
+                .body(s)
+                .when().put("/orders/{orderId}/status", order.getId())
+                .then().statusCode(200)
+                    .body("status", is("CONFIRMED"));
     }
 
 

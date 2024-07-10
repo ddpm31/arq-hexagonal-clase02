@@ -1,4 +1,4 @@
-package com.example.hexagonal;
+package com.example;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
